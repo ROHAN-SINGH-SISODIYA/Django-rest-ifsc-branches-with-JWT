@@ -2,8 +2,7 @@ from django.db import models
 
 
 class Bank(models.Model):
-    id=models.DecimalField(max_digits=50)
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=50)
 
     class Meta:
         ordering = ('name',)
@@ -14,8 +13,8 @@ class Bank(models.Model):
 
 class Branch(models.Model):
     ifsc = models.CharField(max_length=500, unique=True)
-    bank_id = models.ForeignKey(Bank, on_delete=models.PROTECT)
-    branch = models.CharField(max_length=256)
+    bank = models.ForeignKey(Bank, on_delete=models.PROTECT)
+    name = models.CharField(max_length=256)
     address = models.TextField()
     city = models.CharField(max_length=500)
     district = models.CharField(max_length=500)
