@@ -17,7 +17,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 
 # Quick-start development settings - unsuitable for production
-SECRET_KEY = os.environ.get('&#v@)4%2g$v_saxo=x4a=gm4pp64whk0$bipp_qk_a2t%3j13z')
+SECRET_KEY = os.environ.get('rohanrajput')
 EMAIL_HOST_USER = os.environ.get('rohanrajput32843@gmail.com')
 EMAIL_HOST_PASSWORD = os.environ.get('rohan@32843')
 
