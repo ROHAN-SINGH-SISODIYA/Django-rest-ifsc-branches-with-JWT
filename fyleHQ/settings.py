@@ -156,9 +156,8 @@ DATABASES['default'].update(db_from_env)
 STATIC_URL = '/static/'
 
 # Extra places for collectstatic to find static files.
-
-
 django_heroku.settings(locals())
 
 
 #http  http://127.0.0.1:8000/branches/BHOPAL/ALLAHABAD%20BANK "Authorization:Token 97e0503454c871b73d52e0bacee046c8611ed5de"
+#http https://fylehq-api.herokuapp.com/branches/BHOPAL/ALLAHABAD%20BANK "Authorization:Token 97e0503454c871b73d52e0bacee046c8611ed5de"
