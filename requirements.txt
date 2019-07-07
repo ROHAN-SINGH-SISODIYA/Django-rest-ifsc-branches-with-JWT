@@ -8,9 +8,11 @@ django-allauth==0.39.1
 django-filter==2.1.0
 django-heroku==0.3.1
 django-rest-auth==0.9.5
+django-templated-mail==1.1.1
 djangorestframework==3.9.4
 djangorestframework-jwt==1.11.0
 djangorestframework-simplejwt==4.3.0
+djoser==1.7.0
 gunicorn==19.9.0
 httpie==1.0.2
 idna==2.7
@@ -25,6 +27,8 @@ pytz==2019.1
 requests==2.19.1
 requests-oauthlib==1.2.0
 six==1.12.0
+social-auth-app-django==3.1.0
+social-auth-core==3.2.0
 sqlparse==0.3.0
 urllib3==1.23
 virtualenv==16.6.1
