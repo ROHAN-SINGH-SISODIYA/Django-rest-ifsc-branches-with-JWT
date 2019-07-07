@@ -28,6 +28,11 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+    )
+}
 
 # Application definition
 
@@ -40,8 +45,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'rest_framework.authtoken',
-    'djoser',
-    'api'
+    'api',
+    'rest_auth',
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'rest_auth.registration',
 ]
 
 MIDDLEWARE = [
@@ -74,22 +83,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'fyleHQ.wsgi.application'
 
-REST_FRAMEWORK = {
-    'DEFAULT_RENDERER_CLASSES':(
-        'rest_framework.renderers.JSONRenderer',
-        'rest_framework.renderers.BrowsableAPIRenderer',
-    ),
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-
-        #'rest_framework_simplejwt.authentication.JWTAuthentication',
-        #'rest_framework.authentication.TokenAuthentication',
-        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
-    ),
-    'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAuthenticated',
-    )
-
-}
 JWT_AUTH = {
     # how long the original token is valid for
     'JWT_EXPIRATION_DELTA': datetime.timedelta(days=5),
@@ -168,10 +161,4 @@ STATIC_URL = '/static/'
 django_heroku.settings(locals())
 
 
-#http http://127.0.0.1:8000/api/ifsc/APGB0002112 "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxN
-#TYyNTA4NzU0LCJqdGkiOiI0ZTczZGZhN2ViMTU0OWU4YmRkOGQ2OWY3YjhmNjI3NSIsInVzZXJfaWQiOjF9.nDbIxrC93W0wkm_pCaQ829Ve5Il93_GvULU8tAxrjok"
-"""
-  $ curl -X POST -d "username=admin&password=password123" http://localhost:8000/api/auth/token/
-  $ curl -H "Authorization: JWT <your_token>" http://localhost:8000/api/ifsc/
-  eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNTYyNTIzNzUxLCJqdGkiOiIwM2Q3ZmE2Yjc4Nzc0NWFkYmVjNmUzODg5MDA1ZmYwNSIsInVzZXJfaWQiOjF9.Pwf1_9cWEPwDVXvkoqw_fQeGTVe6AgRBel63SZz0PFM
-"""
+#http  http://127.0.0.1:8000/branches/BHOPAL/ALLAHABAD%20BANK "Authorization:Token 97e0503454c871b73d52e0bacee046c8611ed5de"
