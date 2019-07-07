@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 import django_heroku
 import os
+import datetime
 import dj_database_url
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -38,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'rest_framework.authtoken',
+    'djoser',
     'api'
 ]
 
@@ -71,14 +74,48 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'fyleHQ.wsgi.application'
 
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES':(
+        'rest_framework.renderers.JSONRenderer',
+        'rest_framework.renderers.BrowsableAPIRenderer',
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
 
+        #'rest_framework_simplejwt.authentication.JWTAuthentication',
+        #'rest_framework.authentication.TokenAuthentication',
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    )
+
+}
+JWT_AUTH = {
+    # how long the original token is valid for
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(days=5),
+
+    # allow refreshing of tokens
+    'JWT_ALLOW_REFRESH': True,
+
+    # this is the maximum time AFTER the token was issued that
+    # it can be refreshed.  exprired tokens can't be refreshed.
+    'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=5),
+}
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
 DATABASES = {
+   # 'default': {
+    #    'ENGINE': 'django.db.backends.sqlite3',
+     #   'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    #}
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'd8g77atjiagtta',
+        'USER': 'vobfcngduhcrub',
+        'PASSWORD': '071986fb8155f9b1ead8ccc0851524faba4f5d176c9d903475dd8c638eafbc20',
+        'HOST': 'ec2-107-20-173-2.compute-1.amazonaws.com',
+        'PORT': '5432',
     }
 }
 
@@ -119,9 +156,22 @@ USE_TZ = True
 db_from_env = dj_database_url.config(conn_max_age=500)
 DATABASES['default'].update(db_from_env)
 # Static files (CSS, JavaScript, Images)
+
+
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
 
+# Extra places for collectstatic to find static files.
+
 
 django_heroku.settings(locals())
+
+
+#http http://127.0.0.1:8000/api/ifsc/APGB0002112 "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxN
+#TYyNTA4NzU0LCJqdGkiOiI0ZTczZGZhN2ViMTU0OWU4YmRkOGQ2OWY3YjhmNjI3NSIsInVzZXJfaWQiOjF9.nDbIxrC93W0wkm_pCaQ829Ve5Il93_GvULU8tAxrjok"
+"""
+  $ curl -X POST -d "username=admin&password=password123" http://localhost:8000/api/auth/token/
+  $ curl -H "Authorization: JWT <your_token>" http://localhost:8000/api/ifsc/
+  eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNTYyNTIzNzUxLCJqdGkiOiIwM2Q3ZmE2Yjc4Nzc0NWFkYmVjNmUzODg5MDA1ZmYwNSIsInVzZXJfaWQiOjF9.Pwf1_9cWEPwDVXvkoqw_fQeGTVe6AgRBel63SZz0PFM
+"""
