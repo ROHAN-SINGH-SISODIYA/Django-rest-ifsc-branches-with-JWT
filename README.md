@@ -2,6 +2,7 @@ Django-rest-ifsc-branches with JWT
 A RESTful API written in Django to get any branch details using ifsc code and find all the branches of a bank in a Indian city.
 
 ##Run
+   
    $ python manage.py runserver
 
 ## Installation
@@ -27,11 +28,12 @@ we get:
 ```
 Instead, if we try to access with credentials:
 ```
-	http  http://127.0.0.1:8000/branches/BHOPAL/ALLAHABAD%20BANK "Authorization:Token 97e0503454c871b73d52e0bacee046c8611ed5de"
+	curl -H "Authorization:Token 97e0503454c871b73d52e0bacee046c8611ed5de"   http://127.0.0.1:8000/branches/BHOPAL/ALLAHABAD%20BANK 
 	
 	##Run On Heroku Server
 	
-	http https://fylehq-api.herokuapp.com/branches/BHOPAL/ALLAHABAD%20BANK "Authorization:Token 97e0503454c871b73d52e0bacee046c8611ed5de"
+	curl -H "Authorization:Token 97e0503454c871b73d52e0bacee046c8611ed5de" 
+		https://fylehq-api.herokuapp.com/branches/BHOPAL/ALLAHABAD%20BANK 
 ```
 
 ## Login and Tokens
@@ -41,20 +43,23 @@ To get a token first we have to login
 	http http://127.0.0.1:8000/rest-auth/login/ username="admin" password="12345"
 ```
 after that, we get the token
-```
+```  
 {
     "key": "97e0503454c871b73d52e0bacee046c8611ed5de"
+    
+    validity upto 5 days
 }
 ```
+### Curl Commands
 
-### Commands
+curl -H "Authorization:Token key" http://localhost:8000/ifsc/{ifsccode} 
 
-http http://localhost:8000/ifsc/{ifsccode}
-http http://localhost:8000/branches/{city}/{bank-name}
+curl -H "Authorization:Token key" http://localhost:8000/branches/{city}/{bank-name} 
 
 ### with heroku 
 
-http https://fylehq-api.herokuapp.com/ifsc/{ifsccode}
-http https://fylehq-api.herokuapp.com/branches/{city}/{bank-name}
+curl -H "Authorization:Token key" https://fylehq-api.herokuapp.com/ifsc/{ifsccode}
+
+curl -H "Authorization:Token key" https://fylehq-api.herokuapp.com/branches/{city}/{bank-name} 
 
 in your browser to get started.

@@ -22,17 +22,6 @@ class DetailView(ListAPIView):
 class ListView(ListAPIView):
     permission_classes = (IsAuthenticated, IsOwnerOrReadOnly,)
 
-    def get_queryset(self):
-        movies = Movie.objects.all()
-        return movies
-
-
-    def get(self, request):
-        movies = self.get_queryset()
-        paginate_queryset = self.paginate_queryset(movies)
-        serializer = self.serializer_class(paginate_queryset, many=True)
-        return self.get_paginated_response(serializer.data)
-
     def get(self, request, city, bank):
         branch_qset = Branch.objects.filter(
             city__iexact=city, bank__name__icontains=bank)
