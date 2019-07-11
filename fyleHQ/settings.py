@@ -13,20 +13,22 @@ import django_heroku
 import os
 import datetime
 import dj_database_url
+from decouple import config
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '&#v@)4%2g$v_saxo=x4a=gm4pp64whk0$bipp_qk_a2t%3j13z'
-
+SECRET_KEY = config('SECRET_KEY',True)
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
 
-ALLOWED_HOSTS = []
+DEBUG = config('DEBUG',True)
+
+ALLOWED_HOSTS = ['*']
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
@@ -88,31 +90,28 @@ WSGI_APPLICATION = 'fyleHQ.wsgi.application'
 
 JWT_AUTH = {
     # how long the original token is valid for
-    'JWT_EXPIRATION_DELTA': datetime.timedelta(days=5),
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(days=15),
 
     # allow refreshing of tokens
     'JWT_ALLOW_REFRESH': True,
 
     # this is the maximum time AFTER the token was issued that
     # it can be refreshed.  exprired tokens can't be refreshed.
-    'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=5),
+    'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=15),
 }
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
 DATABASES = {
-   # 'default': {
+     # 'default': {
     #    'ENGINE': 'django.db.backends.sqlite3',
      #   'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     #}
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'd8g77atjiagtta',
-        'USER': 'vobfcngduhcrub',
-        'PASSWORD': '071986fb8155f9b1ead8ccc0851524faba4f5d176c9d903475dd8c638eafbc20',
-        'HOST': 'ec2-107-20-173-2.compute-1.amazonaws.com',
-        'PORT': '5432',
-    }
+        'default':{
+                   'ENGINE': 'django.db.backends.postgresql_psycopg2',
+                   'NAME':dj_database_url.config('DATABASE_URL'),
+        },
+        
 }
 
 
@@ -162,5 +161,5 @@ STATIC_URL = '/static/'
 django_heroku.settings(locals())
 
 
-#http  http://127.0.0.1:8000/branches/BHOPAL/ALLAHABAD%20BANK "Authorization:Token 97e0503454c871b73d52e0bacee046c8611ed5de"
+#http  http://127.0.0.1:8000/branches/BHOPAL/ALLAHABAD%20BANK "Authorization:Token 6f21932819a97791ac7edfeefa15bd93b5e86d60"
 #http https://fylehq-api.herokuapp.com/branches/BHOPAL/ALLAHABAD%20BANK "Authorization:Token 97e0503454c871b73d52e0bacee046c8611ed5de"
