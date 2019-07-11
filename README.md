@@ -35,7 +35,12 @@ Instead, if we try to access with credentials:
 	curl -H "Authorization:Token 97e0503454c871b73d52e0bacee046c8611ed5de" 
 		https://fylehq-api.herokuapp.com/branches/BHOPAL/ALLAHABAD%20BANK 
 ```
-
+## Limit and Offset Parameters
+``` 
+    By_default limit is 5
+	##Run On Heroku Server
+	curl -H "Authorization:Token 97e0503454c871b73d52e0bacee046c8611ed5de"  https://fylehq-api.herokuapp.com/branches/BHOPAL/ALLAHABAD%20BANK/?limit=2
+```  
 ## Login and Tokens
 
 To get a token first we have to login

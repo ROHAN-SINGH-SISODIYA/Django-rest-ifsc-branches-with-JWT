@@ -16,23 +16,32 @@ from .permissions import IsOwnerOrReadOnly, IsAuthenticated
 class DetailView(ListAPIView):
     permission_classes = (IsAuthenticated, IsOwnerOrReadOnly,)
 
-    def get(self, request, ifsc):
+    def get(self, request):
+        ifsc = request.GET.get('ifsc','')
         branch = Branch.objects.filter(ifsc__iexact=ifsc).first()
         serializer = BranchSerializer(branch)
         return JsonResponse(serializer.data, safe=False)
 
 
-class ListView(ListAPIView):
-    permission_classes = (IsAuthenticated, IsOwnerOrReadOnly,)
-    pagination_class = CustomPagination
-
-    def get(self, request, city, bank):
-        serializer_classes = BranchSerializer
-        all_branch = Branch.objects.filter(city__iexact=city, bank__name__icontains=bank)
-        paginate_queryset = self.paginate_queryset(all_branch)
-        serializer = serializer_classes(paginate_queryset, many=True)
-        return self.get_paginated_response(serializer.data)
-
+class ListView(generics.ListAPIView):
+   model = Branch
+   permission_classes = (IsAuthenticated, IsOwnerOrReadOnly,)
+   pagination_class = CustomPagination
+   
+   def get_queryset(self):
+       queryset = Branch.objects.all()
+       bank = self.request.query_params.get('bank_nam')
+       city = self.request.query_params.get('city')
+       all_branch = queryset.filter(bank__name__icontains=bank,city__iexact=city)
+       return all_branch
+       
+   def get(self, request):
+           all_branches=self.get_queryset()
+           paginate_queryset = self.paginate_queryset(all_branches)
+           serializer_classes = BranchSerializer
+           serializer = serializer_classes(paginate_queryset, many=True)
+           return self.get_paginated_response(serializer.data)
+    
 
 
 
