@@ -13,7 +13,6 @@ import django_heroku
 import os
 import datetime
 import dj_database_url
-from decouple import config
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -23,10 +22,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = config('SECRET_KEY',True)
+SECRET_KEY = os.environ.get('SECRET_KEY',True)
 # SECURITY WARNING: don't run with debug turned on in production!
 
-DEBUG = config('DEBUG',True)
+DEBUG = os.environ.get('DEBUG',True)
 
 ALLOWED_HOSTS = ['*']
 
@@ -109,8 +108,8 @@ DATABASES = {
     #}
         'default':{
                    'ENGINE': 'django.db.backends.postgresql_psycopg2',
-                   'NAME':dj_database_url.config('DATABASE_URL'),
-        },
+                   'database':os.environ.get('DATABASE_URL'),
+        }
         
 }
 
