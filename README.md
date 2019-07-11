@@ -20,7 +20,7 @@ You can install httpie using pip:
 
 Only authenticated users can use the API services, for that reason if we try this:
 ```
-	http  http://127.0.0.1:8000/ifsc/ALLA0210804
+	http  http://127.0.0.1:8000/ifsc?ifsc=ALLA0210804
 ```
 we get:
 ```
@@ -28,18 +28,17 @@ we get:
 ```
 Instead, if we try to access with credentials:
 ```
-	curl -H "Authorization:Token 97e0503454c871b73d52e0bacee046c8611ed5de"   http://127.0.0.1:8000/branches/BHOPAL/ALLAHABAD%20BANK 
+	curl -H "Authorization:Token 6f21932819a97791ac7edfeefa15bd93b5e86d60" "http://127.0.0.1:8000/branches?bank_nam=ALLAHABAD+BANK&city=BHOPAL&limit=4" 
 	
 	##Run On Heroku Server
 	
-	curl -H "Authorization:Token 97e0503454c871b73d52e0bacee046c8611ed5de" 
-		https://fylehq-api.herokuapp.com/branches/BHOPAL/ALLAHABAD%20BANK 
+	curl -H "Authorization:Token 6f21932819a97791ac7edfeefa15bd93b5e86d60" "https://fylehq-api.herokuapp.com/branches?bank_nam=ALLAHABAD+BANK&city=BHOPAL&limit=4"
 ```
 ## Limit and Offset Parameters
 ``` 
-    By_default limit is 5
+        By_default limit is 5
 	##Run On Heroku Server
-	curl -H "Authorization:Token 97e0503454c871b73d52e0bacee046c8611ed5de"  https://fylehq-api.herokuapp.com/branches/BHOPAL/ALLAHABAD%20BANK/?limit=2
+	curl -H "Authorization:Token 6f21932819a97791ac7edfeefa15bd93b5e86d60" "https://fylehq-api.herokuapp.com/branches?bank_nam=ALLAHABAD+BANK&city=BHOPAL&limit=6"
 ```  
 ## Login and Tokens
 
@@ -57,14 +56,14 @@ after that, we get the token
 ```
 ### Curl Commands
 
-curl -H "Authorization:Token key" http://localhost:8000/ifsc/{ifsccode} 
+curl -H "Authorization:Token key" http://localhost:8000/ifsc?ifsc='' 
 
-curl -H "Authorization:Token key" http://localhost:8000/branches/{city}/{bank-name} 
+curl -H "Authorization:Token key" http://localhost:8000/branches?bank_nam=''&city=''&limit=''
 
 ### with heroku 
 
-curl -H "Authorization:Token key" https://fylehq-api.herokuapp.com/ifsc/{ifsccode}
+curl -H "Authorization:Token key" https://fylehq-api.herokuapp.com/ifsc?ifsc=''
 
-curl -H "Authorization:Token key" https://fylehq-api.herokuapp.com/branches/{city}/{bank-name} 
+curl -H "Authorization:Token key" https://fylehq-api.herokuapp.com/branches?bank_nam=''&city=''&limit='' 
 
 in your browser to get started.
